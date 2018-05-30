@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -14,6 +15,10 @@ module.exports = {
     new ExtractTextPlugin({
       filename: 'css/app.css'
     }),
+    new CopyWebpackPlugin([{
+      from: './src/assets',
+      to: 'assets'
+    }]),
     new HtmlWebpackPlugin({
       hash: true,
       minify: {
