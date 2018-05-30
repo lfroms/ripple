@@ -18,6 +18,9 @@ module.exports = {
     new CopyWebpackPlugin([{
       from: './src/assets',
       to: 'assets'
+    }, {
+      from: './src/modules',
+      to: 'modules'
     }]),
     new HtmlWebpackPlugin({
       hash: true,
