@@ -1,0 +1,27 @@
+html, body {
+  height: 100%;
+  width: 100%;
+
+  overflow: hidden;
+}
+
+.container {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+}
+
+.container * {
+  position: fixed;
+}
+
+r-point {
+  background: #9c27b0;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+
+  box-shadow: 0 0 40px -6px rgba(0, 0, 0, 0.6);
+}
