@@ -51,7 +51,7 @@ module.exports = {
             }
           }]
         }),
-        test: /\.scss$/,
+        test: /(\.css|\.scss)$/,
       }
     ]
   },
