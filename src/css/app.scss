@@ -1,8 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+
+@keyframes pop {
+    0%   {transform: scale(1.0);}
+    50%  {transform: scale(1.2);}
+    100% {transform: scale(1.0);}
+}
+
 html, body {
   height: 100%;
   width: 100%;
 
   overflow: hidden;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  user-select: none;
 }
 
 .container {
@@ -19,9 +29,21 @@ html, body {
 
 r-point {
   background: #9c27b0;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
 
   box-shadow: 0 0 40px -6px rgba(0, 0, 0, 0.6);
+
+  text-align: center;
+  line-height: 60px;
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+
+  transition: transform 0.15s ease;
+}
+
+r-point.pop {
+  animation: pop 0.25s;
 }

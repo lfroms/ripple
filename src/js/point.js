@@ -2,13 +2,18 @@ import Random from './random.js';
 
 const pE = document.registerElement('r-point');
 
-const Point = function() {
-  const element = new pE();
-  element.style.top = Random.pos(70).y + 'px';
-  element.style.left = Random.pos(70).x + 'px';
-  element.id = 'point-' + Date.now();
+class Point {
+  constructor() {
+    this.e = new pE();
+    this.e.style.top = Random.pos().y + 'px';
+    this.e.style.left = Random.pos().x + 'px';
+    this.e.id = 'point-' + (Date.now() + Math.random() * 1000).toFixed();
 
-  return element;
+    this.id = this.e.id;
+
+    this.value = 1;
+    this.e.innerHTML = '+' + this.value;
+  }
 }
 
 export default Point;
