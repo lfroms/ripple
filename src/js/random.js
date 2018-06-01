@@ -6,8 +6,8 @@ function getRandomInt(min, max) {
 
 const Random = {
   pos: function() {
-    let x = getRandomInt(100, $(window).width() - 100);
-    let y = getRandomInt(100, $(window).height() - 100);
+    let x = getRandomInt(150, $(window).width() - 150);
+    let y = getRandomInt(150, $(window).height() - 150);
     return {
       x,
       y

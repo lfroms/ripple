@@ -13,6 +13,8 @@ html, body {
   overflow: hidden;
   font-family: "Roboto", Helvetica, Arial, sans-serif;
   user-select: none;
+
+  background: #eceff1;
 }
 
 .container {
@@ -21,19 +23,17 @@ html, body {
   left: 0;
   right: 0;
   position: fixed;
-}
 
-.container * {
-  position: fixed;
+  * {
+    position: fixed;
+  }
 }
 
 r-point {
-  background: #9c27b0;
+  background: #e91e63;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-
-  box-shadow: 0 0 40px -6px rgba(0, 0, 0, 0.6);
 
   text-align: center;
   line-height: 60px;
@@ -42,8 +42,10 @@ r-point {
   font-size: 20px;
 
   transition: transform 0.15s ease;
-}
 
-r-point.pop {
-  animation: pop 0.25s;
+  z-index: 999;
+
+  &.pop {
+    animation: pop 0.25s;
+  }
 }

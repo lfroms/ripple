@@ -52,6 +52,11 @@ module.exports = {
             options: {
               minimize: true
             }
+          }, {
+            loader: 'sass-loader',
+            options: {
+              minimize: true
+            }
           }]
         }),
         test: /(\.css|\.scss)$/,
