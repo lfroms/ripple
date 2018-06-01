@@ -6,12 +6,15 @@ function getRandomInt(min, max) {
 
 const Random = {
   pos: function() {
-    let x = getRandomInt(150, $(window).width() - 150);
+    let x = getRandomInt(150, $(window).width() - 250);
     let y = getRandomInt(150, $(window).height() - 150);
     return {
       x,
       y
     };
+  },
+  rand: function(min, max) {
+    return getRandomInt(min, max);
   }
 }
 

@@ -15,7 +15,32 @@
 
   <body>
     <div class="container">
+      <r-total>0</r-total>
+      <r-current>0</r-current>
     </div>
+
+    <r-upgrades>
+      <header>
+        <h1>Upgrades</h1>
+        <hr />
+      </header>
+
+      <ul class="upgrades-list">
+        <li id="dot-u" class="disabled">
+          <h1>Another Dot</h1>
+          <small>&gt; 30 | MAX 50</small>
+        </li>
+        <li id="val-u" class="disabled">
+          <h1>Increase Dot Value by 1</h1>
+          <small>&gt; 100 | MAX 100</small>
+        </li>
+        <li id="autoripple-u" class="disabled">
+          <h1>Auto Ripple +1Hz</h1>
+          <small>&gt; 200 | MAX 2Hz</small>
+        </li>
+      </ul>
+    </r-upgrades>
+
     <script type="text/javascript" src="./modules/js/jquery.js"></script>
     <script type="text/javascript" src="./modules/js/ripple.min.js"></script>
   </body>

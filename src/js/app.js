@@ -1,15 +1,17 @@
+import '../css/typefaces.scss';
 import '../css/app.scss';
 import '../css/normalize.css';
 
 import Random from './random.js';
-import Point from './point.js';
+import Dot from './dot.js';
 import Helpers from './helpers.js';
 
 // Custom HTML Elements
-let activePoints = [new Point, new Point];
+let activeDots = [new Dot];
 
-$(".container").append(activePoints[0].e);
-$(".container").append(activePoints[1].e);
+for (let dot of activeDots) {
+  $(".container").append(dot.e);
+}
 
 // Environment
 
@@ -31,29 +33,80 @@ $.ripple(".container", {
 });
 
 let points = 0;
+let current = 0;
 
 // Logic
 
 function checkCollisions() {
-  for (let point of activePoints) {
-    for (let ripple of $(".ripple"))
-    if (Helpers.isColliding($(point.e), $(ripple))) {
-      if (!$(point.e).hasClass("pop")) {
-        $(point.e).addClass("pop");
+for (let ripple of $(".ripple")) {
+  for (let dot of activeDots) {
+      if (Helpers.isColliding($(dot.e), $(ripple))) {
+        if (!$(dot.e).hasClass("pop")) {
+          $(dot.e).addClass("pop");
 
-        setTimeout(function() {
-          $(point.e).removeClass("pop");
-        }, 250);
+          setTimeout(function() {
+            $(dot.e).removeClass("pop");
+          }, 250);
+        }
+
+        if ($.inArray(ripple, dot.collidedWith) === -1) {
+          points += dot.value;
+          current += dot.value;
+
+          document.title = 'Total: ' + points;
+
+          dot.collidedWith.push(ripple);
+        }
       }
-
-      points += point.value;
-      document.title = points;
     }
   }
 }
 
+function updateAvailableOptions() {
+  if (current > 30 && activeDots.length <= 50) {
+    $("#dot-u").removeClass("disabled");
+  } else {
+    $("#dot-u").addClass("disabled");
+  }
+
+  if (current > 100) {
+    $("#val-u").removeClass("disabled");
+  } else {
+    $("#val-u").addClass("disabled");
+  }
+
+  if (current > 200) {
+    $("#autoripple-u").removeClass("disabled");
+  } else {
+    $("#autoripple-u").addClass("disabled");
+  }
+}
+
+$("#dot-u").click(function() {
+  if (activeDots.length <= 50) {
+    current = current - 30;
+    const dot = new Dot;
+    activeDots.push(dot);
+    $(".container").append(dot.e);
+  } else {
+    $("#dot-u").addClass("disabled");
+  }
+});
+
+$("#val-u").click(function() {
+  const randDot = Random.rand(0, activeDots.length);
+
+  activeDots[randDot].value++;
+  current = current - 100;
+});
+
 function loop() {
   checkCollisions();
+  updateAvailableOptions();
+
+  $('r-total').text(points);
+  $('r-current').text(current);
+
   window.requestAnimationFrame(loop);
 }
 

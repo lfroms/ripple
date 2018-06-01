@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.26.0",
+    "melanke-watchjs": "^1.4.3"
   }
 }
