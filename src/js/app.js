@@ -91,6 +91,12 @@ function updateAvailableOptions() {
   } else {
     $('#autoripple-u').addClass('disabled');
   }
+
+  if (Data.currentPoints > 2000) {
+    $('#val-plus-u').removeClass('disabled');
+  } else {
+    $('#val-plus-u').addClass('disabled');
+  }
 }
 
 $('#dot-u').click(() => {
@@ -127,6 +133,15 @@ $('#autoripple-u').click(() => {
 
     setLabels();
   }
+});
+
+$('#val-plus-u').click(() => {
+  const randDot = Random.rand(0, activeDots.length);
+
+  activeDots[randDot].value += 10;
+  Data.currentPoints -= 100;
+
+  setLabels();
 });
 
 function startInterval(interval) {
