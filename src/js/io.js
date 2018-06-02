@@ -13,7 +13,7 @@ const IO = {
   load() {
     let savedData = {};
     const activeDots = [];
-    const gameData = {};
+    let gameData = {};
 
     try {
       savedData = JSON.parse(localStorage.getItem('ripple-game-data'));
@@ -23,8 +23,7 @@ const IO = {
       return;
     }
 
-    gameData.totalPoints = savedData.totalPoints;
-    gameData.currentPoints = savedData.currentPoints;
+    gameData = savedData;
 
     for (const node of savedData.DOMNodes) {
       const e = $(node.e).removeClass('pop')[0];

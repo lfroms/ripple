@@ -18,12 +18,15 @@ for (const dot of activeDots) {
 const Data = savedData ? savedData.gameData : {
   totalPoints: 0,
   currentPoints: 0,
+  autoSpeed: 2200,
   DOMNodes: getDomNodes(),
 };
 
 setLabels();
-
-// Environment
+let autoSpeedIntervalId;
+if (Data.autoSpeed <= 2000) {
+  startInterval(Data.autoSpeed);
+}
 
 $.ripple('.container', {
   debug: false,
@@ -83,7 +86,7 @@ function updateAvailableOptions() {
     $('#val-u').addClass('disabled');
   }
 
-  if (Data.currentPoints > 200) {
+  if (Data.currentPoints > 500 && Data.autoSpeed > 500) {
     $('#autoripple-u').removeClass('disabled');
   } else {
     $('#autoripple-u').addClass('disabled');
@@ -113,6 +116,27 @@ $('#val-u').click(() => {
 
   setLabels();
 });
+
+$('#autoripple-u').click(() => {
+  if (Data.autoSpeed <= 2200 && Data.autoSpeed >= 500 ) {
+    Data.autoSpeed -= 200;
+    Data.currentPoints -= 500;
+
+    clearInterval(autoSpeedIntervalId);
+    startInterval(Data.autoSpeed);
+
+    setLabels();
+  }
+});
+
+function startInterval(interval) {
+  autoSpeedIntervalId = setInterval(() => {
+    let event = $.Event('mousedown');
+    event.pageX = Random.pos().x;
+    event.pageY = Random.pos().y;
+    $('.container').trigger(event);
+  }, interval);
+}
 
 function setLabels() {
   document.title = `Total: ${Data.totalPoints}`;

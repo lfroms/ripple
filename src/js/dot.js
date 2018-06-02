@@ -23,11 +23,9 @@ class Dot {
     this.collidedWith = [];
 
     // Bind changes to this.value with the innerHTML to auto-change the HTML text.
-    if (e && value) {
-      watch(this, 'value', () => {
-        this.e.innerHTML = '+' + this.value;
-      });
-    }
+    watch(this, 'value', () => {
+      this.e.innerHTML = '+' + this.value;
+    });
   }
 }
 
