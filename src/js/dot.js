@@ -19,19 +19,22 @@ class Dot {
       this.e.innerHTML = '+' + (this.value >= 1000 ? (this.value / 1000) + 'k' : this.value);
     }
 
+    // Limit label to +10k
+    if (this.value >= 10000) {
+      this.e.classList.add('blue');
+      this.e.innerHTML = '+10k';
+    }
+
     // Store list of ripples to prevent multiple triggers
     this.collidedWith = [];
 
     // Bind changes to this.value with the innerHTML to auto-change the HTML text.
     watch(this, 'value', () => {
       this.e.innerHTML = '+' + (this.value >= 1000 ? (this.value / 1000) + 'k' : this.value);
-    });
 
-    // Limit label to +10k
-    if (this.value >= 10000) {
-      this.e.classList.add('blue');
-      this.e.innerHTML = '+10k';
-    }
+      // Limit label to +10k
+      if (this.value >= 10000) this.e.innerHTML = '+10k';
+    });
   }
 }
 
