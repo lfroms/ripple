@@ -1,12 +1,12 @@
 // Save/Load/Store Game Data
 
-import Dot from './dot'
+import Dot from './dot';
 
 const IO = {
   save(data) {
     try {
       localStorage.setItem('ripple-game-data', JSON.stringify(data));
-    } catch(err) {
+    } catch (err) {
       console.error('Unable to save game data.  Will try again in 5 seconds.');
     }
   },
@@ -17,8 +17,8 @@ const IO = {
 
     try {
       savedData = JSON.parse(localStorage.getItem('ripple-game-data'));
-      if (savedData == null) return;
-    } catch(err) {
+      if (savedData == null) { return; }
+    } catch (err) {
       console.error('Unable to load saved game data.');
       return;
     }
@@ -31,7 +31,7 @@ const IO = {
     }
 
     return {activeDots, gameData};
-  }
+  },
 };
 
 export default IO;

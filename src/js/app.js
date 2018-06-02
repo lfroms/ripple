@@ -25,10 +25,10 @@ const Data = savedData ? savedData.gameData : {
 const Defaults = {
   ptDot: 30,
   ptDotVal1: 200,
-  ptAutoRipple: 1000,
-  ptDotVal10: 4000,
-  ptSuperdot: 1000000
-}
+  ptAutoRipple: 2000,
+  ptDotVal10: 2000,
+  ptSuperdot: 1000000,
+};
 
 setLabels();
 let autoSpeedIntervalId;
@@ -138,7 +138,7 @@ $('#val-u').click(() => {
 });
 
 $('#autoripple-u').click(() => {
-  if (Data.autoSpeed <= 2200 && Data.autoSpeed >= 500 ) {
+  if (Data.autoSpeed <= 2200 && Data.autoSpeed >= 500) {
     Data.autoSpeed -= 200;
     Data.currentPoints -= Defaults.ptAutoRipple;
 
@@ -175,7 +175,7 @@ $('#superdot-u').click(() => {
 
 function startInterval(interval) {
   autoSpeedIntervalId = setInterval(() => {
-    let event = $.Event('mousedown');
+    const event = $.Event('mousedown');
     event.pageX = Random.pos().x;
     event.pageY = Random.pos().y;
     $('.container').trigger(event);
@@ -187,7 +187,7 @@ function setLabels() {
   $('r-total').text(Data.totalPoints);
   $('r-current').text(Data.currentPoints);
 
-  if (Data.totalPoints > 100) $('.instructions').fadeOut(500);
+  if (Data.totalPoints > 100) { $('.instructions').fadeOut(500); }
 }
 
 function loop() {
