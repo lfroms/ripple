@@ -5,17 +5,17 @@ function getRandomInt(min, max) {
 }
 
 const Random = {
-  pos: function() {
-    let x = getRandomInt(150, $(window).width() - 250);
-    let y = getRandomInt(150, $(window).height() - 150);
+  pos() {
+    const x = getRandomInt(150, $(window).width() - 250);
+    const y = getRandomInt(150, $(window).height() - 150);
     return {
       x,
-      y
+      y,
     };
   },
-  rand: function(min, max) {
+  rand(min, max) {
     return getRandomInt(min, max);
-  }
-}
+  },
+};
 
 export default Random;

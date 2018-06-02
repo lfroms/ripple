@@ -1,4 +1,4 @@
-import Random from './random.js';
+import Random from './random';
 import WatchJS from 'melanke-watchjs';
 
 const watch = WatchJS.watch;
@@ -16,7 +16,7 @@ class Dot {
     this.value = 1;
     this.e.innerHTML = '+' + this.value;
 
-    // Store list of ripples to prevent multiple triggers.
+    // Store list of ripples to prevent multiple triggers
     this.collidedWith = [];
 
     // Bind changes to this.value with the innerHTML to auto-change the HTML text.
