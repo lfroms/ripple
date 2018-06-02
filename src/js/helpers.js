@@ -15,8 +15,7 @@ const Helpers = {
       const deltaX = d1_distance_from_left - d2_distance_from_left;
       const deltaY = d1_distance_from_top - d2_distance_from_top;
 
-      if (radiusTotal > Math.sqrt((deltaX * deltaX) + (deltaY * deltaY)) &&
-        radiusTotal <= Math.sqrt((deltaX * deltaX) + (deltaY * deltaY)) + 20) {
+      if (radiusTotal > Math.sqrt((deltaX * deltaX) + (deltaY * deltaY))) {
         return true;
       } else {
         return false;

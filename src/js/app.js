@@ -11,7 +11,10 @@ let activeDots = [new Dot];
 
 for (let dot of activeDots) {
   $(".container").append(dot.e);
+  console.log(activeDots[0].e);
+
 }
+
 
 // Environment
 
@@ -38,16 +41,9 @@ let current = 0;
 // Logic
 
 function checkCollisions() {
-for (let ripple of $(".ripple")) {
-  for (let dot of activeDots) {
+  for (let ripple of $(".ripple")) {
+    for (let dot of activeDots) {
       if (Helpers.isColliding($(dot.e), $(ripple))) {
-        if (!$(dot.e).hasClass("pop")) {
-          $(dot.e).addClass("pop");
-
-          setTimeout(function() {
-            $(dot.e).removeClass("pop");
-          }, 250);
-        }
 
         if ($.inArray(ripple, dot.collidedWith) === -1) {
           points += dot.value;
@@ -56,6 +52,17 @@ for (let ripple of $(".ripple")) {
           document.title = 'Total: ' + points;
 
           dot.collidedWith.push(ripple);
+
+          if (!$(dot.e).hasClass("pop")) {
+            $(dot.e).addClass("pop");
+
+            setTimeout(function() {
+              $(dot.e).removeClass("pop");
+            }, 250);
+          }
+
+          $('r-total').text(points);
+          $('r-current').text(current);
         }
       }
     }
@@ -103,9 +110,6 @@ $("#val-u").click(function() {
 function loop() {
   checkCollisions();
   updateAvailableOptions();
-
-  $('r-total').text(points);
-  $('r-current').text(current);
 
   window.requestAnimationFrame(loop);
 }
