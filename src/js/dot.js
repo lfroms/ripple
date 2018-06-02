@@ -16,13 +16,12 @@ class Dot {
       this.e.style.top = Random.pos().y + 'px';
       this.e.style.left = Random.pos().x + 'px';
       this.e.id = 'dot-' + (Date.now() + Math.random() * 1000).toFixed();
-      this.e.innerHTML = '+' + (this.value >= 1000 ? (this.value / 1000) + 'k' : this.value);
+      this.e.innerHTML = '+' + (this.value >= 1000 ? parseInt(this.value / 1000) + 'k' : this.value);
     }
 
     // Limit label to +10k
     if (this.value >= 10000) {
       this.e.classList.add('blue');
-      this.e.innerHTML = '+10k';
     }
 
     // Store list of ripples to prevent multiple triggers
@@ -30,10 +29,7 @@ class Dot {
 
     // Bind changes to this.value with the innerHTML to auto-change the HTML text.
     watch(this, 'value', () => {
-      this.e.innerHTML = '+' + (this.value >= 1000 ? (this.value / 1000) + 'k' : this.value);
-
-      // Limit label to +10k
-      if (this.value >= 10000) this.e.innerHTML = '+10k';
+      this.e.innerHTML = '+' + (this.value >= 1000 ? parseInt(this.value / 1000) + 'k' : this.value);
     });
   }
 }

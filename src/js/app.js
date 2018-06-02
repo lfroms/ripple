@@ -8,6 +8,7 @@ import Helpers from './helpers';
 import IO from './io';
 
 // Initialize Environment
+
 const savedData = IO.load();
 const activeDots = savedData ? savedData.activeDots : [new Dot()];
 
@@ -53,13 +54,14 @@ $.ripple('.container', {
   easing: 'linear',
 });
 
-// Logic
+// COLLISION CHECKERS ==
 
 function checkCollisions() {
   for (const ripple of $('.ripple')) {
     for (const dot of activeDots) {
       if (Helpers.isColliding($(dot.e), $(ripple))) {
 
+        // Check if already involved in collision.
         if ($.inArray(ripple, dot.collidedWith) === -1) {
           Data.totalPoints += dot.value;
           Data.currentPoints += dot.value;
@@ -68,6 +70,7 @@ function checkCollisions() {
 
           dot.collidedWith.push(ripple);
 
+          // Do CSS animation on collision
           if (!$(dot.e).hasClass('pop')) {
             $(dot.e).addClass('pop');
 
@@ -80,6 +83,8 @@ function checkCollisions() {
     }
   }
 }
+
+// UPGRADE CHECKERS ====
 
 function updateAvailableOptions() {
   if (Data.currentPoints > Defaults.ptDot && activeDots.length <= 50) {
@@ -112,6 +117,8 @@ function updateAvailableOptions() {
     $('#superdot-u').addClass('disabled');
   }
 }
+
+// UPGRADE CLICK LISTENERS =======
 
 $('#dot-u').click(() => {
   if (activeDots.length <= 50) {
@@ -173,6 +180,8 @@ $('#superdot-u').click(() => {
   setLabels();
 });
 
+// MISC FUNCTIONS ======
+
 function startInterval(interval) {
   autoSpeedIntervalId = setInterval(() => {
     const event = $.Event('mousedown');
@@ -190,6 +199,8 @@ function setLabels() {
   if (Data.totalPoints > 100) { $('.instructions').fadeOut(500); }
 }
 
+// MAIN LOOP ===========
+
 function loop() {
   checkCollisions();
   updateAvailableOptions();
@@ -199,8 +210,8 @@ function loop() {
 
 window.requestAnimationFrame(loop);
 
+// COLLECT DOT DATA ====
 
-// Game Stats
 function getDomNodes() {
   const data = [];
 
@@ -214,10 +225,15 @@ function getDomNodes() {
   return data;
 }
 
+// AUTOSAVE ============
+
 window.setInterval(() => {
   Data.DOMNodes = getDomNodes();
   IO.save(Data);
 }, 5000);
+
+
+// KEY LISTENERS =======
 
 $(window).keydown((e) => {
   if (e.which === 83) {
@@ -229,6 +245,48 @@ $(window).keydown((e) => {
     setTimeout(() => {
       $('.notification').fadeOut(300);
     }, 1000);
+
+    e.preventDefault();
+  }
+
+  if (e.which === 67) {
+    const options = '"10m" - adds 10 million points\n"bigVal" - sets value of all dots to ~1k\n"super10" - adds 10 superdots\n"50dot" - adds 50 standard dots\n"clr" - reset everything';
+    const name = prompt(`Enter the name of the feature to test.\n${options}`);
+
+    if (name === '10m') {
+      Data.currentPoints += 10000000;
+    } else if (name === 'bigVal') {
+      for (const dot of activeDots) {
+        dot.value = 1001;
+      }
+    } else if (name === 'super10') {
+      for (let i = 0; i < 10; i++) {
+        const dot = new Dot(null, 10000);
+        activeDots.push(dot);
+        $('.container').append(dot.e);
+      }
+    } else if (name === '50dot') {
+      for (let i = 0; i < 50; i++) {
+        activeDots.push(new Dot());
+      }
+
+      for (const dot of activeDots) {
+        $('.container').append(dot.e);
+      }
+    } else if (name === 'clr') {
+      activeDots.length = 0;
+      $('r-dot').remove();
+
+      Data.totalPoints = 0;
+      Data.currentPoints = 0;
+      Data.autoSpeed = 2200;
+      clearInterval(autoSpeedIntervalId);
+
+      setLabels();
+
+      activeDots.push(new Dot());
+      $('.container').append(activeDots[0].e);
+    }
 
     e.preventDefault();
   }
