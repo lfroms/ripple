@@ -22,6 +22,14 @@ const Data = savedData ? savedData.gameData : {
   DOMNodes: getDomNodes(),
 };
 
+const Defaults = {
+  ptDot: 30,
+  ptDotVal1: 200,
+  ptAutoRipple: 1000,
+  ptDotVal10: 4000,
+  ptSuperdot: 1000000
+}
+
 setLabels();
 let autoSpeedIntervalId;
 if (Data.autoSpeed <= 2000) {
@@ -74,34 +82,40 @@ function checkCollisions() {
 }
 
 function updateAvailableOptions() {
-  if (Data.currentPoints > 30 && activeDots.length <= 50) {
+  if (Data.currentPoints > Defaults.ptDot && activeDots.length <= 50) {
     $('#dot-u').removeClass('disabled');
   } else {
     $('#dot-u').addClass('disabled');
   }
 
-  if (Data.currentPoints > 100) {
+  if (Data.currentPoints > Defaults.ptDotVal1 && activeDots.length > 50) {
     $('#val-u').removeClass('disabled');
   } else {
     $('#val-u').addClass('disabled');
   }
 
-  if (Data.currentPoints > 500 && Data.autoSpeed > 500) {
+  if (Data.currentPoints > Defaults.ptAutoRipple && Data.autoSpeed > 500) {
     $('#autoripple-u').removeClass('disabled');
   } else {
     $('#autoripple-u').addClass('disabled');
   }
 
-  if (Data.currentPoints > 2000) {
+  if (Data.currentPoints > Defaults.ptDotVal10) {
     $('#val-plus-u').removeClass('disabled');
   } else {
     $('#val-plus-u').addClass('disabled');
+  }
+
+  if (Data.currentPoints > Defaults.ptSuperdot && activeDots.length <= 70) {
+    $('#superdot-u').removeClass('disabled');
+  } else {
+    $('#superdot-u').addClass('disabled');
   }
 }
 
 $('#dot-u').click(() => {
   if (activeDots.length <= 50) {
-    Data.currentPoints -= 30;
+    Data.currentPoints -= Defaults.ptDot;
 
     const dot = new Dot();
     activeDots.push(dot);
@@ -118,7 +132,7 @@ $('#val-u').click(() => {
   const randDot = Random.rand(0, activeDots.length);
 
   activeDots[randDot].value++;
-  Data.currentPoints -= 100;
+  Data.currentPoints -= Defaults.ptDotVal1;
 
   setLabels();
 });
@@ -126,7 +140,7 @@ $('#val-u').click(() => {
 $('#autoripple-u').click(() => {
   if (Data.autoSpeed <= 2200 && Data.autoSpeed >= 500 ) {
     Data.autoSpeed -= 200;
-    Data.currentPoints -= 500;
+    Data.currentPoints -= Defaults.ptAutoRipple;
 
     clearInterval(autoSpeedIntervalId);
     startInterval(Data.autoSpeed);
@@ -139,7 +153,22 @@ $('#val-plus-u').click(() => {
   const randDot = Random.rand(0, activeDots.length);
 
   activeDots[randDot].value += 10;
-  Data.currentPoints -= 100;
+  Data.currentPoints -= Defaults.ptDotVal10;
+
+  setLabels();
+});
+
+$('#superdot-u').click(() => {
+  if (activeDots.length <= 70) {
+    Data.currentPoints -= Defaults.ptSuperdot;
+
+    const dot = new Dot(null, 10000);
+    activeDots.push(dot);
+
+    $('.container').append(dot.e);
+  } else {
+    $('#superdot-u').addClass('disabled');
+  }
 
   setLabels();
 });

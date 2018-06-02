@@ -53,6 +53,10 @@ r-dot {
   &.pop {
     animation: pop 0.25s;
   }
+
+  &.blue {
+    background: #2196f3;
+  }
 }
 
 r-total {
