@@ -5,14 +5,23 @@ import '../css/normalize.css';
 import Random from './random';
 import Dot from './dot';
 import Helpers from './helpers';
+import IO from './io';
 
-// Custom HTML Elements
-const activeDots = [new Dot()];
+// Initialize Environment
+const savedData = IO.load();
+const activeDots = savedData ? savedData.activeDots : [new Dot()];
 
 for (const dot of activeDots) {
   $('.container').append(dot.e);
 }
 
+const Data = savedData ? savedData.gameData : {
+  totalPoints: 0,
+  currentPoints: 0,
+  DOMNodes: getDomNodes(),
+};
+
+setLabels();
 
 // Environment
 
@@ -33,9 +42,6 @@ $.ripple('.container', {
   easing: 'linear',
 });
 
-let points = 0;
-let current = 0;
-
 // Logic
 
 function checkCollisions() {
@@ -44,8 +50,8 @@ function checkCollisions() {
       if (Helpers.isColliding($(dot.e), $(ripple))) {
 
         if ($.inArray(ripple, dot.collidedWith) === -1) {
-          points += dot.value;
-          current += dot.value;
+          Data.totalPoints += dot.value;
+          Data.currentPoints += dot.value;
 
           setLabels();
 
@@ -65,19 +71,19 @@ function checkCollisions() {
 }
 
 function updateAvailableOptions() {
-  if (current > 30 && activeDots.length <= 50) {
+  if (Data.currentPoints > 30 && activeDots.length <= 50) {
     $('#dot-u').removeClass('disabled');
   } else {
     $('#dot-u').addClass('disabled');
   }
 
-  if (current > 100) {
+  if (Data.currentPoints > 100) {
     $('#val-u').removeClass('disabled');
   } else {
     $('#val-u').addClass('disabled');
   }
 
-  if (current > 200) {
+  if (Data.currentPoints > 200) {
     $('#autoripple-u').removeClass('disabled');
   } else {
     $('#autoripple-u').addClass('disabled');
@@ -86,9 +92,11 @@ function updateAvailableOptions() {
 
 $('#dot-u').click(() => {
   if (activeDots.length <= 50) {
-    current -= 30;
+    Data.currentPoints -= 30;
+
     const dot = new Dot();
     activeDots.push(dot);
+
     $('.container').append(dot.e);
   } else {
     $('#dot-u').addClass('disabled');
@@ -101,15 +109,15 @@ $('#val-u').click(() => {
   const randDot = Random.rand(0, activeDots.length);
 
   activeDots[randDot].value++;
-  current -= 100;
+  Data.currentPoints -= 100;
 
   setLabels();
 });
 
 function setLabels() {
-  document.title = `Total: ${points}`;
-  $('r-total').text(points);
-  $('r-current').text(current);
+  document.title = `Total: ${Data.totalPoints}`;
+  $('r-total').text(Data.totalPoints);
+  $('r-current').text(Data.currentPoints);
 }
 
 function loop() {
@@ -120,3 +128,38 @@ function loop() {
 }
 
 window.requestAnimationFrame(loop);
+
+
+// Game Stats
+function getDomNodes() {
+  const data = [];
+
+  for (const dot of activeDots) {
+    data.push({
+      e: dot.e.outerHTML,
+      value: dot.value,
+    });
+  }
+
+  return data;
+}
+
+window.setInterval(() => {
+  Data.DOMNodes = getDomNodes();
+  IO.save(Data);
+}, 5000);
+
+$(window).keydown((e) => {
+  if (e.which === 83) {
+    $('.notification').show().css('display', 'flex');
+
+    Data.DOMNodes = getDomNodes();
+    IO.save(Data);
+
+    setTimeout(() => {
+      $('.notification').fadeOut(300);
+    }, 1000);
+
+    e.preventDefault();
+  }
+});

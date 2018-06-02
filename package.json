@@ -7,8 +7,8 @@
   "scripts": {
     "dist": "webpack",
     "start": "webpack-dev-server",
-    "lint": "eslint src/js/random.js --max-warnings 0; exit 0;",
-    "lint-fix": "eslint src/js/random.js --max-warnings 0 --fix; exit 0;"
+    "lint": "eslint src/js/app.js --max-warnings 0; exit 0;",
+    "lint-fix": "eslint src/js/app.js --max-warnings 0 --fix; exit 0;"
   },
   "babel": {
     "presets": [

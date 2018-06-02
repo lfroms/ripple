@@ -63,7 +63,7 @@ r-total {
   top: 0px;
 
   font-size: 7.5em;
-  z-index: 999;
+  z-index: 1000;
 }
 
 r-current {
@@ -74,7 +74,7 @@ r-current {
   top: 130px;
 
   font-size: 2.5em;
-  z-index: 999;
+  z-index: 1000;
 }
 
 r-upgrades {
@@ -154,5 +154,42 @@ r-upgrades {
         }
       }
     }
+  }
+}
+
+.notification {
+  width: 180px;
+  height: 180px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+
+  color: white;
+
+  display: none;
+
+  i {
+    font-size: 50px;
+  }
+
+  break {
+    flex-basis: 100%;
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+  }
+
+  label {
+    margin-top: 15px;
   }
 }
