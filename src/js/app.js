@@ -186,6 +186,8 @@ function setLabels() {
   document.title = `Total: ${Data.totalPoints}`;
   $('r-total').text(Data.totalPoints);
   $('r-current').text(Data.currentPoints);
+
+  if (Data.totalPoints > 100) $('.instructions').fadeOut(500);
 }
 
 function loop() {
